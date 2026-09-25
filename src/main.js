@@ -2779,8 +2779,9 @@ async function boot() {
   try {
     state.data=await loadData();
     const weeks=availableWeeks(state.data.main);
-    const preferred=weeks.find((w)=>isoDate(w)==='2026-09-07');
-    state.week=preferred||weeks[0];
+    // Sempre inicia pelo período mais recente disponível nos dados demo.
+    // `availableWeeks` já retorna as semanas em ordem decrescente.
+    state.week=weeks[0] || null;
     const hashPage=location.hash.replace('#','');
     const validPages=new Set(['overview','demands','backlog','environments','improvements']);
     if(validPages.has(hashPage)) state.page=hashPage;
